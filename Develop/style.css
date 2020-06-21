@@ -23,6 +23,7 @@
 
 .description{
   white-space: pre-wrap;
+  background-color:transparent;
 }
 
 .time-block{

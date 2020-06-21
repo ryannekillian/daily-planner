@@ -1,38 +1,46 @@
+$(document).ready(function() {
 var currentHour = moment().format("HH");
 var now = moment().format("dddd, MMMM Do, YYYY");
 
-$(document).ready(function() {
-    $("#currentDay").text(moment().format("dddd, MMM Do"))
-})
-
-var updateHour = function () {
-    $(".time.block").each(function() {
-        var scheduledHour = $(this).att("id").split('-')[1]
-        console.log(scheduleHour)
-        if (scheduledHour < currentHour) {
-            $(this).removeClass("future")
-            $(this).addClass("past")
-        }
-        else if (scheduledHour === currentHour) {
-            $(this).removeClass("past")
-            $(this).addClass("present")
-        }
-        else {
-            $(this).removeClass("past")
-            $(this).removeClass("present")
-            $(this).addClass("future")
-        };
+    $("[id^='hour']").each(function(_, el) {
+        var description = localStorage.getItem($(el).attr('id')) || '';
+        console.log(description) 
+        $(el).find(".description").text(description)
     })
-};
-
-$("#currentDay").append("<p class= 'body'>" + now + "</p>");
-
-$(".saveBtn").click(function() {
-    var hour1 = $(".description")
-    .val()
-    .trim()
-    localStorage.setItem("description", hour1)
+   updateHour() 
+    $("#currentDay").text(moment().format("dddd, MMM Do"))
+    
+    function updateHour() {
+        $(".time-block").each(function(_, el) {
+            var scheduledHour = $(el).attr("id").split('-')[1]
+            if (+scheduledHour < +currentHour) {
+                $(el).removeClass("future")
+                $(el).removeClass("present")
+                $(el).addClass("past")
+            }
+            else if (+scheduledHour === +currentHour) {
+                $(el).removeClass("past")
+                $(el).removeClass("future")
+                $(el).addClass("present")
+            }
+            else {
+                $(el).removeClass("past")
+                $(el).removeClass("present")
+                $(el).addClass("future")
+            };
+        })
+    };
+    
+    $("#currentDay").append("<p class= 'body'>" + now + "</p>");
+    
+    $(".saveBtn").click(function() {
+        
+        var hour1 = $(this).parent().find(".description")
+        .val()
+        .trim()
+        localStorage.setItem($(this).parent().attr('id'), hour1)
+    })
+    
+    
 })
-
-var time = $(this)
-    .parent()
+    

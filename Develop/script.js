@@ -8,8 +8,7 @@ var now = moment().format("dddd, MMMM Do, YYYY");
         $(el).find(".description").text(description)
     })
    updateHour() 
-    $("#currentDay").text(moment().format("dddd, MMM Do"))
-    
+        
     function updateHour() {
         $(".time-block").each(function(_, el) {
             var scheduledHour = $(el).attr("id").split('-')[1]
